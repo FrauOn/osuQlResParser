@@ -82,12 +82,14 @@ if __name__ == "__main__":
             client_secret = value
         elif key == 'spread':
             spread = int(value)
+        elif key == 'last_id':
+            last_id = int(value)  # Преобразуем last_id в целое число
 
     # Создание объекта Ossapi с указанием клиентских данных
     api = Ossapi(client_id, client_secret)
 
     # Чтение из CSV файла
-    with open('data_example.csv', 'r', newline='') as file:
+    with open('data.csv', 'r', newline='') as file:
         reader = csv.reader(file)
         target_word_info = next(reader)[0].split(';')  # Получаем искомое слово и количество матчей из первой строки
         target_word = target_word_info[0].rstrip(';')  # Удаляем ";" в конце
@@ -99,7 +101,7 @@ if __name__ == "__main__":
 
         # Поиск ближайшего матча
         start_id = 0
-        end_id = 113236987
+        end_id = last_id
         nearest_match_id = find_nearest_match(start_id, end_id, target_datetime)
 
         if nearest_match_id is not None:
